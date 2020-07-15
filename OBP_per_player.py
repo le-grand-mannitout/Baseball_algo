@@ -44,14 +44,13 @@ def soup_to_data(soup_name):
 
 def player_stat(teams):
 
-    stats = {}
+    stats = []
     
     for i in range(len(teams)):
 
         player_soup = []
         player_list = []
         OBP_list = []
-        list_tuple = []
 
         url_team = requests.get('https://www.baseball-reference.com' + teams[i])
         
@@ -71,11 +70,11 @@ def player_stat(teams):
 
         for k in range(len(player_list)):
 
-            list_tuple.append((player_list[k], OBP_list[k]))
-
-        stats[teams[i]] = list_tuple
+            stats.append((player_list[k], OBP_list[k]))
 
     return stats
 
 teams = team()
 stats = player_stat(teams)
+
+print(stats)
