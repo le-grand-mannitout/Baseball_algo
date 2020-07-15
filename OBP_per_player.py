@@ -76,5 +76,3 @@ def player_stat(teams):
 
 teams = team()
 stats = player_stat(teams)
-
-print(stats)
