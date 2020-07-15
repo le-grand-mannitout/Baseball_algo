@@ -75,6 +75,6 @@ def player_stat(teams):
 
     return stats
 
-
-teams = team()
-stats = player_stat(teams)
+if __name__ == "__main__":
+    teams = team()
+    stats = player_stat(teams)
