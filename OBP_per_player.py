@@ -42,6 +42,7 @@ def soup_to_data(soup_name):
 
     return clean_soup
 
+
 def player_stat(teams):
 
     stats = []
@@ -73,6 +74,7 @@ def player_stat(teams):
             stats.append((player_list[k], OBP_list[k]))
 
     return stats
+
 
 teams = team()
 stats = player_stat(teams)
