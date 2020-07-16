@@ -64,18 +64,31 @@ def player_stat(teams):
         AB_soup = soup.findAll("td", {"data-stat":"AB"})
         R_soup = soup.findAll("td", {"data-stat":"R"})
 
+<<<<<<< HEAD
         for j in range(len(player_soup_mess)):
             player_soup.append(player_soup_mess[j].find("a"))
 
         AB_list = soup_to_data(AB_soup)
         R_list = soup_to_data(R_soup)
+=======
+        #for j in range(len(player_soup_mess)):
+        #    player_soup.append(player_soup_mess[j].find("a"))
+       
+        [player_soup_mess[j].find("a") for j in range(len(player_soup_mess))]
+        
+>>>>>>> 3cb498ce28d2bd0c473bfabbb3b26e120e074cca
         OBP_list = soup_to_data(OBP_soup)
         player_list = soup_to_data(player_soup)
 
         for k in range(len(player_list)):
 
+<<<<<<< HEAD
             stats.append((player_list[k], OBP_list[k], AB_list[k], R_list[k]))
 
+=======
+           stats.append((player_list[k], OBP_list[k])
+        
+>>>>>>> 3cb498ce28d2bd0c473bfabbb3b26e120e074cca
     return stats
 
 if __name__ == "__main__":
