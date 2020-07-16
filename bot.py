@@ -1,10 +1,16 @@
-
-import os
 import random
-import discord
+import os
+
 from dotenv import load_dotenv
+from discord.ext import commands
+from discord.ext.commands import Bot
+import discord
 
 import OBP_per_player
+
+
+bot = commands.Bot(command_prefix="b ")
+
 
 teams = OBP_per_player.team()
 stats = OBP_per_player.player_stat(teams)
@@ -14,20 +20,22 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = discord.Client()
 
-@client.event
+@bot.event
 async def on_ready():
-    print(f'{client.user.name} has connected to Discord!')
+    print(f'{client.user.name} is online.')
+    
+    await bot.change_presence(activity=discord.Game(name="Baseball", type=3))
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+    
+@bot.command(name="stats", help=": Affiche l'OBP de tous les joueurs.")
+async def display_stat(message):
 
-    if message.content == 'Go!':
+
+    for stat in range(len(stats)):
         
-        for i in range(len(stats)):
-            
-            response = ("Le joueur", stats[i][0], "a pour OBP", stats[i][1])
-            await message.channel.send(response)
+        stat_embed = discord.Embed(title=stats[i][0], description=f"__OBP :__ **{stats[i][1]}**.", color=0xff0000)
+       
+        await message.send(stat_embed)
 
-client.run(TOKEN)
+            
+bot.run(TOKEN)
