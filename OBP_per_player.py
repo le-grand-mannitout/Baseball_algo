@@ -61,16 +61,20 @@ def player_stat(teams):
         soup = bs4.BeautifulSoup(url_team.text, 'html.parser')
         player_soup_mess = soup.findAll("td", {"data-stat":"player"})[:nb_batter]
         OBP_soup = soup.findAll("td", {"data-stat":"onbase_perc"})[:nb_batter]
+        AB_soup = soup.findAll("td", {"data-stat":"AB"})
+        R_soup = soup.findAll("td", {"data-stat":"R"})
 
         for j in range(len(player_soup_mess)):
             player_soup.append(player_soup_mess[j].find("a"))
 
+        AB_list = soup_to_data(AB_soup)
+        R_list = soup_to_data(R_soup)
         OBP_list = soup_to_data(OBP_soup)
         player_list = soup_to_data(player_soup)
 
         for k in range(len(player_list)):
 
-            stats.append((player_list[k], OBP_list[k]))
+            stats.append((player_list[k], OBP_list[k], AB_list[k], R_list[k]))
 
     return stats
 
