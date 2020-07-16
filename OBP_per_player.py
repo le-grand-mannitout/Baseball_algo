@@ -62,16 +62,18 @@ def player_stat(teams):
         player_soup_mess = soup.findAll("td", {"data-stat":"player"})[:nb_batter]
         OBP_soup = soup.findAll("td", {"data-stat":"onbase_perc"})[:nb_batter]
 
-        for j in range(len(player_soup_mess)):
-            player_soup.append(player_soup_mess[j].find("a"))
-
+        #for j in range(len(player_soup_mess)):
+        #    player_soup.append(player_soup_mess[j].find("a"))
+       
+        [player_soup_mess[j].find("a") for j in range(len(player_soup_mess))]
+        
         OBP_list = soup_to_data(OBP_soup)
         player_list = soup_to_data(player_soup)
 
         for k in range(len(player_list)):
 
-            stats.append((player_list[k], OBP_list[k]))
-
+           stats.append((player_list[k], OBP_list[k])
+        
     return stats
 
 if __name__ == "__main__":
