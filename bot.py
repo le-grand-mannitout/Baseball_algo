@@ -34,8 +34,7 @@ import OBP_per_player
 
 
 
-teams = OBP_per_player.team()
-stats = OBP_per_player.player_stat(teams)
+
 
 
 
@@ -51,10 +50,14 @@ bot = commands.Bot(command_prefix="bball ")
 
 
 
+
 @bot.event
 async def on_ready():
+    """
+        Affiche un message avertissant de la mise en route du bot et change le statut du bot.
+    """
 
-    print('Baseball Bot is online.')
+    print(f"{bot.user.name} is online.")
 
     await bot.change_presence(activity=discord.Game(name="Baseball | bball help", type=3))
 
@@ -63,30 +66,48 @@ async def on_ready():
 
 @bot.command(name="stat", help=": Affiche l'OBP de tous les joueurs.")
 async def display_stat(message):
+    """
+        Affiche l'OBP de tous les joueurs dans un embed coloré en fonction de leurs résultats.
+    """
+
+
+    teams = OBP_per_player.team()
+    stats = OBP_per_player.player_stat(teams)
 
 
 
     for j in range(len(stats)):
-        print(stats[j][1])
-
 
         if stats[j][1] is None:
             color_ = 0x5c5c5c
 
-        elif float(stats[j][1]) < .333:
+
+        # inférieur à .200 => rouge : médiocre
+        elif float(stats[j][1]) < .200:
             color_ = 0xed0000
 
-
-        elif float(stats[j][1]) > .666 and stats[stat][1] > .333:
+        # entre .200 et .300 => jaune : moyen
+        elif float(stats[j][1]) > .200 and float(stats[j][1]) < .300:
             color_ = 0xfdee00
 
+        # entre .300 et .500 => vert clair : bon
+        elif float(stats[j][1]) > .300 and float(stats[j][1]) < .500:
+            color_ = 0x149414
+
+        # sinon => vert foncé : excellent
         else:
-            color_ = 0x34c924
+            color_ = 0x00561B
 
 
-        stat_embed = discord.Embed(title=stats[j][0], description=f"__OBP :__    0{stats[j][1]}", color=color_)
+
+        stat_embed = discord.Embed(title="", description="", color=color_)
+
+        stat_embed.add_field(name=stats[j][0], value=f"OBP:    0{stats[j][1]}")
+
+
 
         await message.send(embed=stat_embed)
+
 
 
 
