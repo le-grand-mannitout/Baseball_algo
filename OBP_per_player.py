@@ -1,6 +1,7 @@
 import requests
 import bs4
 
+
 #Set OBP AB and R per player in list "stats"
 
 #return teams, list of (team_end_url, nb_batter_in_team) tuples
@@ -84,4 +85,3 @@ def player_stat(teams):
 if __name__ == "__main__":
     teams = team()
     stats = player_stat(teams)
-

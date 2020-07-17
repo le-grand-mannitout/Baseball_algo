@@ -35,15 +35,13 @@ import OBP_per_player
 
 
 
-
-
-
 load_dotenv()
 
 
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = discord.Client()
+
 
 
 bot = commands.Bot(command_prefix="bball ")
@@ -64,7 +62,7 @@ async def on_ready():
 
 
 
-@bot.command(name="stat", help=": Affiche l'OBP de tous les joueurs.")
+@bot.command(name="stats", help=": Affiche l'OBP de tous les joueurs.")
 async def display_stat(message):
     """
         Affiche l'OBP de tous les joueurs dans un embed coloré en fonction de leurs résultats.
@@ -107,8 +105,6 @@ async def display_stat(message):
 
 
         await message.send(embed=stat_embed)
-
-
 
 
 bot.run(TOKEN)
