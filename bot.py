@@ -24,7 +24,6 @@
 
 import os
 
-
 from dotenv import load_dotenv
 from discord.ext import commands
 from discord.ext.commands import Bot
@@ -43,9 +42,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 client = discord.Client()
 
 
-
 bot = commands.Bot(command_prefix="bball ")
-
 
 
 
@@ -62,12 +59,13 @@ async def on_ready():
 
 
 
-@bot.command(name="stats", help=": Affiche l'OBP de tous les joueurs.")
+@bot.command(name="stat", help=": Affiche l'OBP de tous les joueurs.")
 async def display_stat(message):
     """
         Affiche l'OBP de tous les joueurs dans un embed coloré en fonction de leurs résultats.
     """
 
+    print(f"Stat command has been called by {message.author}.")
 
     teams = OBP_per_player.team()
     stats = OBP_per_player.player_stat(teams)
@@ -105,6 +103,52 @@ async def display_stat(message):
 
 
         await message.send(embed=stat_embed)
+
+
+
+
+
+@bot.command(name="info", help=": Affiche l'OBP du joueur mentionné en argument")
+async def search_player_info(message, *player_name):
+    """
+        Renvoie un embed contenant les informations du joueur mentionné.
+    """
+
+    player_name = " ".join([i.title() for i in player_name])
+
+    await message.send(f"{player_name} info is being searched.")
+
+    print(f"Search command with argument : \"{player_name}\" was been called by {message.author}.")
+
+
+    teams = OBP_per_player.team()
+    stats = OBP_per_player.player_stat(teams)
+
+
+    for player_info in stats:
+
+        if player_name in player_info:
+
+            player_obp = player_info[1]
+
+            player_description = f"OBP : 0{player_obp}"
+
+            break
+    else:
+
+        player_description = f"{player_name} info was not found."
+
+
+
+    player_info_embed = discord.Embed(title=f"{player_name} informations", description=player_description, color=0x002fa7)
+
+    player_info_embed.add_field(name=len(f"Requested by **{message.author}**")*"\_", value=f"Requested by **{message.author}**")
+
+
+    await message.send(embed=player_info_embed)
+
+
+
 
 
 bot.run(TOKEN)
