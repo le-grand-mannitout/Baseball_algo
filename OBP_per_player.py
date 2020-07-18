@@ -1,6 +1,5 @@
-
-import requests  
-import bs4 
+import requests
+import bs4
 
 #Set OBP AB and R per player in list "stats"
 
@@ -10,7 +9,7 @@ def team():
 
     teams = []
 
-    url_season = requests.get('https://www.baseball-reference.com/leagues/MLB/2019.shtml') 
+    url_season = requests.get('https://www.baseball-reference.com/leagues/MLB/2019.shtml')
 
     soup = bs4.BeautifulSoup(url_season.text, 'html.parser')
     teams_soup = soup.findAll("th", {"class":"left"})
@@ -51,8 +50,8 @@ def soup_to_data(soup_name):
 
 def player_stat(teams):
 
-    stats = []
-    
+    # ~ stats = []
+
     for i in range(len(teams)):
 
         player_soup = []
@@ -61,26 +60,33 @@ def player_stat(teams):
         nb_batter = int(teams[i][1])
 
         url_team = requests.get('https://www.baseball-reference.com' + teams[i][0])
-        
+
         soup = bs4.BeautifulSoup(url_team.text, 'html.parser')
         player_soup_mess = soup.findAll("td", {"data-stat":"player"})[:nb_batter]
         OBP_soup = soup.findAll("td", {"data-stat":"onbase_perc"})[:nb_batter]
         AB_soup = soup.findAll("td", {"data-stat":"AB"})
         R_soup = soup.findAll("td", {"data-stat":"R"})
 
-        for j in range(len(player_soup_mess)):
-            player_soup.append(player_soup_mess[j].find("a"))
+
+        # ~ for j in range(len(player_soup_mess)):
+            # ~ player_soup.append(player_soup_mess[j].find("a"))
+
+        player_soup = [player_soup_mess[j].find("a") for j in range(len(player_soup_mess))]
+
 
         AB_list = soup_to_data(AB_soup)
         R_list = soup_to_data(R_soup)
         OBP_list = soup_to_data(OBP_soup)
         player_list = soup_to_data(player_soup)
 
-        for k in range(len(player_list)):
+        # ~ for k in range(len(player_list)):
 
-            stats.append((player_list[k], OBP_list[k], AB_list[k], R_list[k]))
+            # ~ stats.append((player_list[k], OBP_list[k], AB_list[k], R_list[k]))
+
+        stats = [(player_list[k], OBP_list[k], AB_list[k], R_list[k]) for k in range(len(player_list))]
 
     return stats
+
 
 if __name__ == "__main__":
     teams = team()
