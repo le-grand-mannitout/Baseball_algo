@@ -1,7 +1,6 @@
 import requests
 import bs4
 
-
 #Set OBP AB and R per player in list "stats"
 
 #return teams, list of (team_end_url, nb_batter_in_team) tuples
@@ -51,7 +50,7 @@ def soup_to_data(soup_name):
 
 def player_stat(teams):
 
-    stats = []
+    # ~ stats = []
 
     for i in range(len(teams)):
 
@@ -68,19 +67,26 @@ def player_stat(teams):
         AB_soup = soup.findAll("td", {"data-stat":"AB"})
         R_soup = soup.findAll("td", {"data-stat":"R"})
 
-        for j in range(len(player_soup_mess)):
-            player_soup.append(player_soup_mess[j].find("a"))
+
+        # ~ for j in range(len(player_soup_mess)):
+            # ~ player_soup.append(player_soup_mess[j].find("a"))
+
+        player_soup = [player_soup_mess[j].find("a") for j in range(len(player_soup_mess))]
+
 
         AB_list = soup_to_data(AB_soup)
         R_list = soup_to_data(R_soup)
         OBP_list = soup_to_data(OBP_soup)
         player_list = soup_to_data(player_soup)
 
-        for k in range(len(player_list)):
+        # ~ for k in range(len(player_list)):
 
-            stats.append((player_list[k], OBP_list[k], AB_list[k], R_list[k]))
+            # ~ stats.append((player_list[k], OBP_list[k], AB_list[k], R_list[k]))
+
+        stats = [(player_list[k], OBP_list[k], AB_list[k], R_list[k]) for k in range(len(player_list))]
 
     return stats
+
 
 if __name__ == "__main__":
     teams = team()
