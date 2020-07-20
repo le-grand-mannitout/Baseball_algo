@@ -16,4 +16,3 @@ def main():
     teams = OBP_per_player.team()
     stats = OBP_per_player.player_stat(teams)
     interpretate_players_names(stats, game_url)
-
