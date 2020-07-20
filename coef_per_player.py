@@ -1,3 +1,4 @@
+
 import requests  
 import bs4 
 
@@ -82,7 +83,6 @@ def player_stat(teams):
             
             except TypeError:
                 pass
-                
 
             stats.append((player_list[k], clean_OBP + AB_list[k] + R_list[k]))
 
