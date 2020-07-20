@@ -77,8 +77,15 @@ def player_stat(teams):
         player_list = soup_to_data(player_soup)
 
         for k in range(len(player_list)):
+            
+            try:
+                clean_OBP = "".join(list("0" + OBP_list[k]))
+            
+            except TypeError:
+                pass
+                
 
-            stats.append((player_list[k], OBP_list[k], AB_list[k], R_list[k]))
+            stats.append((player_list[k], clean_OBP + AB_list[k] + R_list[k]))
 
     return stats
 
